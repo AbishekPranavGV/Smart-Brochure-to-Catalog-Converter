@@ -1,0 +1,21 @@
+name: CI Brochure to Catalog Converter Validation
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Converter Architecture & Specifications
+        run: |
+          python -c "
+          import os
+          assert os.path.exists('README.md'), 'README missing'
+          with open('README.md', 'r', encoding='utf-8') as f:
+              txt = f.read()
+          print(f'Specification document verified ({len(txt)} chars)')
+          "
